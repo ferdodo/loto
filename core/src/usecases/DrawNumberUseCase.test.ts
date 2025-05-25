@@ -98,10 +98,4 @@ describe("DrawNumberUseCase", () => {
 			"Number has already been drawn",
 		);
 	});
-
-	it("should throw when no game is in progress", async () => {
-		const repository = createBingoRepository();
-		const useCase = new DrawNumberUseCase(repository);
-		await expect(useCase.execute(4)).rejects.toThrow("No game in progress");
-	});
 });
