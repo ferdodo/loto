@@ -1,3 +1,9 @@
 services:
   core:
     build: core
+  front:
+    build: front
+    depends_on:
+      - core
+    ports:
+      - "25072:25072"

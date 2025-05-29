@@ -1,4 +1,5 @@
 {
+	"main": "./src/index.ts",
 	"scripts": {
 		"build": "tsc && vitest run && exportcase check src && biome ci src && stryker run"
 	},
