@@ -14,16 +14,12 @@ export function Bingo() {
 			<button type="button" onClick={goToMainMenu}>
 				Retour
 			</button>
-			<h1>Le bingo</h1>
-			<pre>
-				{w} {h}
-			</pre>
+			<h1>Bingo</h1>
 			<div
 				style={{
 					width: "750px",
 					aspectRatio: "9/12",
 					overflow: "hidden",
-					border: "2px solid yellow",
 				}}
 				ref={mountPoint}
 			/>

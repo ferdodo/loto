@@ -10,6 +10,7 @@
     "@types/react-dom": "^19.1.5",
     "core": "file:../core",
     "exportcase": "^0.11.0",
+    "html2canvas": "^1.4.1",
     "matter-js": "^0.20.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

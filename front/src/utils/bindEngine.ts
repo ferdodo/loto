@@ -127,7 +127,7 @@ export function bindEngine(
 	Events.on(render, "afterRender", () => {
 		const ctx = render.context;
 		ctx.save();
-		ctx.font = "20px Arial";
+		ctx.font = "20px InfoStory";
 		ctx.textAlign = "center";
 		ctx.textBaseline = "middle";
 		let text = 0;

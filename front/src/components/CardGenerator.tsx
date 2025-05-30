@@ -1,28 +1,72 @@
 import { GeneratePlayerCardUseCase } from "core";
 import type { PlayerCard } from "core";
-import React, { useState } from "react";
+import html2canvas from "html2canvas";
+import React, { useCallback, useState, useRef } from "react";
+import type { ChangeEvent } from "react";
 import { useNavigation } from "../hooks/useNavigation";
+import { Card } from "./Card";
 
 export function CardGenerator() {
 	const { goToMainMenu } = useNavigation();
-	const [playerCard, setPlayerCard] = useState<PlayerCard | null>(null);
+	const screenshotableElement = useRef(null);
 
-	async function generateCard() {
-		const value = await new GeneratePlayerCardUseCase().execute();
-		setPlayerCard(value);
+	const [playerCard, setPlayerCard] = useState<PlayerCard | null>(null);
+	const [pseudo, setPseudo] = useState<string>("");
+
+	async function changePseudo(e: ChangeEvent<HTMLInputElement>) {
+		setPseudo(e.target.value);
+
+		if (!pseudo) {
+			const value = await new GeneratePlayerCardUseCase().execute();
+			setPlayerCard(value);
+		}
 	}
+
+	const saveCard = useCallback(async () => {
+		if (!screenshotableElement.current) {
+			return;
+		}
+
+		const canvas = await html2canvas(screenshotableElement.current);
+		const image = canvas.toDataURL("image/png");
+
+		const link = document.createElement("a");
+		link.href = image;
+		link.download = `bingo_card_${pseudo}.png`;
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	}, [pseudo]);
 
 	return (
 		<div>
-			<h1>Card generator</h1>
 			<button type="button" onClick={goToMainMenu}>
 				Retour
 			</button>
-			<button type="button" onClick={generateCard}>
-				Generate Card
-			</button>
+			<h1>Generer une carte de joueur</h1>
 
-			{playerCard && JSON.stringify(playerCard)}
+			<div
+				ref={screenshotableElement}
+				style={{
+					backgroundColor: "#8ea741",
+					maxWidth: "80%",
+				}}
+			>
+				<input
+					type="text"
+					placeholder="Pseudo"
+					value={pseudo}
+					onChange={changePseudo}
+				/>
+
+				{playerCard && pseudo && <div>{Card(playerCard)}</div>}
+			</div>
+
+			{screenshotableElement && playerCard && pseudo && (
+				<button type="button" onClick={saveCard}>
+					Enregistrer la carte
+				</button>
+			)}
 		</div>
 	);
 }

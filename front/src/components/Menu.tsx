@@ -7,10 +7,10 @@ export function Menu() {
 	return (
 		<div>
 			<button type="button" onClick={goToBingoScreen}>
-				Bingo
+				Lancer un bingo
 			</button>
 			<button type="button" onClick={goToCardGeneratorScreen}>
-				Card generator
+				Generer une carte de joueur
 			</button>
 		</div>
 	);

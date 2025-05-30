@@ -2,22 +2,53 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title> Bingo </title>
-    <link rel="icon" href="./favicon.ico" type="image/x-icon">
-    <meta name="viewport" content="width=device-width, initial-scale=0.85, user-scalable=no">
-    <script type="module" src="./src/main.tsx"></script>
+	<meta charset="utf-8">
+	<title> Bingo </title>
+	<link rel="icon" href="./favicon.ico" type="image/x-icon">
+	<meta name="viewport" content="width=device-width, initial-scale=0.85, user-scalable=no">
+	<link rel="prefetch" href="./InfoStory.otf" as="font" type="font/otf">
+	<link rel="prefetch" href="./couronne.png" as="image">
+	<link rel="prefetch" href="./tree-branch.png" as="image">
+	<link rel="prefetch" href="./carte.jpg" as="image">
+	<script type="module" src="./src/main.tsx"></script>
 
-    <style>
-        html,
-        body {
-            background-color: #81983f;
-        }
-    </style>
+	<style>
+		html,
+		body {
+			background-color: #81983f;
+			font-family: "InfoStory";
+		}
+
+		@font-face {
+			font-family: 'InfoStory';
+			src: url('./InfoStory.otf') format('opentype');
+		}
+
+		input {
+			background-color: transparent;
+			border: none;
+			font-family: "InfoStory";
+			font-size: 2em;
+			border-bottom: 3px solid black;
+			outline: none;
+			margin: 3rem;
+		}
+
+		button {
+			background-color: rgb(142, 167, 65);
+			border-radius: 1rem;
+			font-size: 2em;
+			padding: 1rem;
+			margin: 1rem;
+			border: none;
+			font-family: "InfoStory";
+			box-shadow: 1px 4px 11px rgba(0, 0, 0, 0.3);
+		}
+	</style>
 </head>
 
 <body>
-    <div id="root"></div>
+	<div id="root"></div>
 </body>
 
 </html>
