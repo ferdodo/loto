@@ -15,11 +15,15 @@ export function Bingo() {
 				Retour
 			</button>
 			<h1>Le bingo</h1>
+			<pre>
+				{w} {h}
+			</pre>
 			<div
 				style={{
-					aspectRatio: "16/9",
-					width: "100%",
+					width: "750px",
+					aspectRatio: "9/12",
 					overflow: "hidden",
+					border: "2px solid yellow",
 				}}
 				ref={mountPoint}
 			/>

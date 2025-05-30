@@ -8,6 +8,8 @@ import {
 	Runner,
 } from "matter-js";
 
+const woodRender = { fillStyle: "brown", strokeStyle: "#222222", lineWidth: 1 };
+
 function createHollowCircle(
 	x: number,
 	y: number,
@@ -43,6 +45,7 @@ function createHollowCircle(
 			{
 				angle: midAngle,
 				isStatic: true,
+				render: woodRender,
 			},
 		);
 
@@ -74,6 +77,15 @@ function createHollowCircle(
 	return [bodies, rotate];
 }
 
+function isColorLight(hex: string) {
+	const hexT = hex.replace("#", "");
+	const r = Number.parseInt(hexT.substr(0, 2), 16);
+	const g = Number.parseInt(hexT.substr(2, 2), 16);
+	const b = Number.parseInt(hexT.substr(4, 2), 16);
+	const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+	return hsp > 127.5;
+}
+
 export function bindEngine(
 	element: HTMLElement | null,
 	width: number,
@@ -91,16 +103,52 @@ export function bindEngine(
 		options: {
 			width,
 			height,
+			wireframes: false,
+			background: "transparent",
 		},
 	});
 
-	const balls = [];
+	const couronne = new Image();
+	couronne.src = "./couronne.png";
+	const tree = new Image();
+	tree.src = "./tree-branch.png";
+
+	const xShift = 180;
+	const yShift = -200;
+
+	const center = {
+		x: width / 2 + xShift,
+		y: height / 2 + yShift,
+	};
+
+	render.bounds.min.x = center.x - width / 2;
+	render.bounds.max.x = center.x + width / 2;
+	render.bounds.min.y = center.y - height / 2;
+	render.bounds.max.y = center.y + height / 2;
+
+	Render.lookAt(render, {
+		min: render.bounds.min,
+		max: render.bounds.max,
+	});
+
+	const balls: Body[] = [];
 
 	for (let i = 0; i < 90; i++) {
 		balls.push(Bodies.circle(400 + Math.random(), 200 + Math.random(), 17));
 	}
 
-	const [arena, rotateArena] = createHollowCircle(500, 200, 225, 205, 40, 98.5);
+	const [arena, rotateArena] = createHollowCircle(500, 200, 225, 205, 40, 100);
+
+	const [gutter, rotateGutter] = createHollowCircle(
+		500,
+		200,
+		225 + 55,
+		205 + 55,
+		40,
+		97,
+	);
+
+	rotateGutter(1.7);
 
 	const [mixer, rotateMixer] = createHollowCircle(500, 200, 195, 100, 40, 1);
 	const [mixer1, rotateMixer1] = createHollowCircle(500, 200, 195, 100, 40, 1);
@@ -110,8 +158,24 @@ export function bindEngine(
 	rotateMixer2((2 * Math.PI) / 3);
 	rotateMixer2((2 * Math.PI) / 3);
 
-	const ground = Bodies.rectangle(400, 610, 810, 60, { isStatic: true });
+	const invisible = { visible: false };
+
+	const ground = Bodies.rectangle(400, 610, 810, 60, {
+		isStatic: true,
+		render: invisible,
+	});
+	const basket1 = Bodies.rectangle(845, 675, 10, 60, {
+		isStatic: true,
+		render: invisible,
+	});
+	const basket2 = Bodies.rectangle(825, 685, 60, 20, {
+		isStatic: true,
+		render: invisible,
+	});
+
 	Body.setAngle(ground, -25);
+	Body.setAngle(basket1, -25);
+	Body.setAngle(basket2, -25);
 
 	Composite.add(engine.world, [
 		...balls,
@@ -120,6 +184,9 @@ export function bindEngine(
 		...mixer,
 		...mixer1,
 		...mixer2,
+		...gutter,
+		basket1,
+		basket2,
 	]);
 
 	Render.run(render);
@@ -133,11 +200,43 @@ export function bindEngine(
 		const delta = event.timestamp - lastTime;
 		lastTime = event.timestamp;
 		const elapsed = Date.now() - start;
-		const accel = 0.8 + elapsed / 8000;
+		const accel = 0.8 + elapsed / 50000;
 		rotateArena(delta * 0.0005);
 		rotateMixer(-delta * 0.0005 * accel);
 		rotateMixer1(-delta * 0.0005 * accel);
 		rotateMixer2(-delta * 0.0005 * accel);
+	});
+
+	Events.on(render, "afterRender", () => {
+		const ctx = render.context;
+		ctx.save();
+		ctx.font = "20px Arial";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		let text = 0;
+
+		for (const ball of balls) {
+			ctx.fillStyle = isColorLight(ball.render.fillStyle || "#ffffff")
+				? "black"
+				: "white";
+
+			ctx.translate(ball.position.x - xShift, ball.position.y - yShift);
+			ctx.rotate(ball.angle);
+			text++;
+			ctx.fillText(`${text}`, 0, 0);
+			ctx.setTransform(1, 0, 0, 1, 0, 0);
+		}
+
+		render.context.drawImage(
+			couronne,
+			-387,
+			10,
+			couronne.width * 1.1,
+			couronne.height * 1.1,
+		);
+
+		render.context.drawImage(tree, -70, 520, tree.width, tree.height);
+		ctx.restore();
 	});
 
 	return () => {
