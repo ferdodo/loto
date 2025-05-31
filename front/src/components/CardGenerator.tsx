@@ -49,15 +49,26 @@ export function CardGenerator() {
 				ref={screenshotableElement}
 				style={{
 					backgroundColor: "#8ea741",
-					maxWidth: "80%",
+					maxWidth: "50rem",
 				}}
 			>
-				<input
-					type="text"
-					placeholder="Pseudo"
-					value={pseudo}
-					onChange={changePseudo}
-				/>
+				<div
+					style={{
+						display: "grid",
+						placeContent: "start",
+						gap: "1rem",
+						padding: "2rem",
+						paddingBottom: playerCard ? "0rem" : "2rem",
+					}}
+				>
+					<label htmlFor="pseudoInput">Nom:</label>
+					<input
+						id="pseudoInput"
+						type="text"
+						value={pseudo}
+						onChange={changePseudo}
+					/>
+				</div>
 
 				{playerCard && pseudo && <div>{Card(playerCard)}</div>}
 			</div>
