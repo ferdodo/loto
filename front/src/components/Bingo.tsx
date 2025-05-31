@@ -16,6 +16,7 @@ export function Bingo() {
 			</button>
 			<h1>Bingo</h1>
 			<div
+				id="bingoMountPoint"
 				style={{
 					width: "750px",
 					aspectRatio: "9/12",
