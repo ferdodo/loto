@@ -31,7 +31,7 @@ export function bindEngine(
 	tree.src = "./tree-branch.png";
 
 	const xShift = 180;
-	const yShift = -200;
+	const yShift = -100;
 
 	const center = {
 		x: width / 2 + xShift,
@@ -147,12 +147,12 @@ export function bindEngine(
 		render.context.drawImage(
 			couronne,
 			-387,
-			10,
+			10 + yShift,
 			couronne.width * 1.1,
 			couronne.height * 1.1,
 		);
 
-		render.context.drawImage(tree, -70, 520, tree.width, tree.height);
+		render.context.drawImage(tree, -70, 520 + yShift, tree.width, tree.height);
 		ctx.restore();
 	});
 
