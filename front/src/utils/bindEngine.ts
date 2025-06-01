@@ -1,3 +1,4 @@
+import type { Bingo } from "core";
 import { Events, Render, Runner } from "matter-js";
 import { Bodies, Body, Composite, Engine } from "matter-js";
 import { createHollowCircle } from "./createHollowCircle";
@@ -7,6 +8,7 @@ export function bindEngine(
 	element: HTMLElement | null,
 	width: number,
 	height: number,
+	bingo: Bingo | null,
 ) {
 	if (!element) {
 		return () => {};
@@ -114,6 +116,10 @@ export function bindEngine(
 	const start = Date.now();
 
 	Events.on(engine, "beforeUpdate", (event) => {
+		if (!bingo?.isDrawRequested) {
+			return;
+		}
+
 		const delta = event.timestamp - lastTime;
 		lastTime = event.timestamp;
 		const elapsed = Date.now() - start;

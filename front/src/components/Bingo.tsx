@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from "react";
-import { useElementSize } from "../hooks/useElementSize";
+import { useBingo } from "../hooks/useBingo";
 import { useNavigation } from "../hooks/useNavigation";
 import { bindEngine } from "../utils/bindEngine";
 import { Flashboard } from "./Flashboard";
@@ -7,8 +7,8 @@ import { Flashboard } from "./Flashboard";
 export function Bingo() {
 	const mountPoint = useRef(null);
 	const { goToMainMenu } = useNavigation();
-	//const { w, h } = useElementSize(mountPoint);
-	useEffect(() => bindEngine(mountPoint.current, 750, 1500), []);
+	const bingo = useBingo();
+	useEffect(() => bindEngine(mountPoint.current, 750, 1500, bingo), [bingo]);
 
 	return (
 		<div>

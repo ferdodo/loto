@@ -1,5 +1,7 @@
+import { DrawNumberUseCase, RequestDrawUseCase } from "core";
 import React, { useMemo } from "react";
 import { useBingo } from "../hooks/useBingo";
+import { bingoRepository } from "../repositories/bingoRepository";
 
 export function Flashboard() {
 	const bingo = useBingo();
@@ -15,6 +17,18 @@ export function Flashboard() {
 		}
 		return _groups;
 	}, []);
+
+	function requestDraw() {
+		new RequestDrawUseCase(bingoRepository).execute();
+	}
+
+	function drawNumber(num: number) {
+		new DrawNumberUseCase(bingoRepository).execute(num);
+	}
+
+	function bingoHasNumber(num: number): boolean {
+		return bingo?.drawnNumbers.includes(num) || false;
+	}
 
 	if (!bingo) {
 		return null;
@@ -35,13 +49,18 @@ export function Flashboard() {
 					<div
 						key={num}
 						style={{
-							border: "1px solid black",
+							border: bingoHasNumber(num)
+								? "1mm solid white"
+								: "1px solid black",
 							gridArea: `${i + 1} / ${j + 1}/ ${i + 2} / ${j + 2}`,
 							aspectRatio: "1/1",
 							display: "grid",
 							placeContent: "center",
 							fontSize: "1.75em",
+							userSelect: "none",
 						}}
+						onDoubleClick={() => drawNumber(num)}
+						onKeyUp={() => drawNumber(num)}
 					>
 						{num}
 					</div>
@@ -50,12 +69,14 @@ export function Flashboard() {
 
 			<div
 				style={{
-					border: "1px solid black",
+					border: bingo.isDrawRequested ? "1mm solid white" : "1px solid black",
 					gridArea: "7/6/8/8",
 					display: "grid",
 					placeContent: "center",
 					fontSize: "1.5em",
 				}}
+				onClick={requestDraw}
+				onKeyUp={requestDraw}
 			>
 				Go !
 			</div>
@@ -68,7 +89,7 @@ export function Flashboard() {
 					fontSize: "1.5em",
 				}}
 			>
-				Stop
+				Annuler
 			</div>
 		</div>
 	);

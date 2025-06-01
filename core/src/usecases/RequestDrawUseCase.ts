@@ -4,7 +4,9 @@ import type { BingoRepository } from "../repositories/BingoRepository";
 export class RequestDrawUseCase {
 	constructor(private readonly bingoRepository: BingoRepository) {}
 
-	async execute(game: Bingo): Promise<void> {
+	async execute(): Promise<void> {
+		const game = await this.bingoRepository.readBingo();
+
 		const updatedGame = new Bingo({
 			...game,
 			isDrawRequested: true,
