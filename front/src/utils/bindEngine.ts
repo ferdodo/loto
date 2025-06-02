@@ -147,7 +147,8 @@ export function bindEngine(
 
 			ctx.translate(ball.position.x - xShift, ball.position.y - yShift);
 			ctx.rotate(ball.angle);
-			ctx.fillText(`${numsLeft[text]}`, 0, 0);
+			const marked = numsLeft[text] === 6 || numsLeft[text] === 9;
+			ctx.fillText(`${numsLeft[text]}${marked ? "." : ""}`, 0, 0);
 			text++;
 			ctx.setTransform(1, 0, 0, 1, 0, 0);
 		}
