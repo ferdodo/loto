@@ -1,4 +1,4 @@
-import type { Loto } from "core";
+import { Loto } from "core";
 import { Events, Render, Runner } from "matter-js";
 import { Bodies, Body, Composite, Engine } from "matter-js";
 import { createHollowCircle } from "./createHollowCircle";
@@ -10,7 +10,7 @@ export function bindEngine(
 	height: number,
 	loto: Loto | null,
 ) {
-	if (!element) {
+	if (!element || !loto) {
 		return () => {};
 	}
 
@@ -52,7 +52,7 @@ export function bindEngine(
 
 	const balls: Body[] = [];
 
-	for (let i = 0; i < 90; i++) {
+	for (const _num of Loto.numbersLeft(loto)) {
 		balls.push(Bodies.circle(400 + Math.random(), 200 + Math.random(), 17));
 	}
 
@@ -138,6 +138,8 @@ export function bindEngine(
 		ctx.textBaseline = "middle";
 		let text = 0;
 
+		const numsLeft = Loto.numbersLeft(loto);
+
 		for (const ball of balls) {
 			ctx.fillStyle = isColorLight(ball.render.fillStyle || "#ffffff")
 				? "black"
@@ -145,8 +147,8 @@ export function bindEngine(
 
 			ctx.translate(ball.position.x - xShift, ball.position.y - yShift);
 			ctx.rotate(ball.angle);
+			ctx.fillText(`${numsLeft[text]}`, 0, 0);
 			text++;
-			ctx.fillText(`${text}`, 0, 0);
 			ctx.setTransform(1, 0, 0, 1, 0, 0);
 		}
 
