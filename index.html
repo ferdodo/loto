@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title> Bingo </title>
+	<link rel="icon" href="./favicon.ico" type="image/x-icon">
+	<meta name="viewport" content="width=device-width, initial-scale=0.85, user-scalable=no">
+	<link rel="prefetch" href="./InfoStory.otf" as="font" type="font/otf">
+	<link rel="prefetch" href="./couronne.png" as="image">
+	<link rel="prefetch" href="./tree-branch.png" as="image">
+	<link rel="prefetch" href="./carte.jpg" as="image">
+
+	<style>
+		html,
+		body {
+			background-color: #81983f;
+			font-family: "InfoStory";
+			font-size: 1vw;
+		}
+
+		@font-face {
+			font-family: 'InfoStory';
+			src: url('./assets/InfoStory-B1e7bieI.otf') format('opentype');
+		}
+
+		input {
+			background-color: transparent;
+			font-family: "InfoStory";
+			border: none;
+			border-bottom: 2px solid black;
+			outline: none;
+			font-size: 1vw;
+		}
+
+		button {
+			background-color: rgb(142, 167, 65);
+			border-radius: 1rem;
+			font-size: 2em;
+			padding: 1rem;
+			margin: 1rem;
+			border: none;
+			font-family: "InfoStory";
+			box-shadow: 1px 4px 11px rgba(0, 0, 0, 0.3);
+		}
+
+		#bingoMountPoint {
+			canvas {
+				max-width: 75vw;
+				max-height: 125vh;
+			}
+		}
+	</style>
+  <script type="module" crossorigin src="./assets/index-63Qv9uuC.js"></script>
+</head>
+
+<body>
+	<div id="root"></div>
+</body>
+
+</html>
