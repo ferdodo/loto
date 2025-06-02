@@ -3,37 +3,46 @@ import { persist } from "zustand/middleware";
 
 enum NavigationState {
 	MainMenu = "MAIN_MENU",
-	BingoScreen = "BINGO_SCREEN",
+	LotoScreen = "BINGO_SCREEN",
 	CardGeneratorScreen = "CARD_GENERATOR_SCREEN",
+	ResetScreen = "RESET_SCREEN",
 }
 
 interface Navigation {
 	state: NavigationState;
-	isBingoScreen: () => boolean;
+	isLotoScreen: () => boolean;
 	isCardGeneratorScreen: () => boolean;
+	isResetScreen: () => boolean;
 	goToMainMenu: () => void;
-	goToBingoScreen: () => void;
+	goToLotoScreen: () => void;
 	goToCardGeneratorScreen: () => void;
+	goToResetScreen: () => void;
 }
 
 export const useNavigation = create<Navigation>()(
 	persist(
 		(set, get) => ({
 			state: NavigationState.MainMenu,
-			isBingoScreen() {
-				return get().state === NavigationState.BingoScreen;
+			isLotoScreen() {
+				return get().state === NavigationState.LotoScreen;
 			},
 			isCardGeneratorScreen() {
 				return get().state === NavigationState.CardGeneratorScreen;
 			},
+			isResetScreen() {
+				return get().state === NavigationState.ResetScreen;
+			},
 			goToMainMenu() {
 				set({ state: NavigationState.MainMenu });
 			},
-			goToBingoScreen() {
-				set({ state: NavigationState.BingoScreen });
+			goToLotoScreen() {
+				set({ state: NavigationState.LotoScreen });
 			},
 			goToCardGeneratorScreen() {
 				set({ state: NavigationState.CardGeneratorScreen });
+			},
+			goToResetScreen() {
+				set({ state: NavigationState.ResetScreen });
 			},
 		}),
 		{ name: "navigation" },

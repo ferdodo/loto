@@ -1,5 +1,5 @@
 FROM node
-WORKDIR /bingo/core
+WORKDIR /loto/core
 COPY package.json .
 RUN npm install
 COPY . .

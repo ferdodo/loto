@@ -1,5 +1,5 @@
-FROM bingo-core
-WORKDIR /bingo/front
+FROM loto-core
+WORKDIR /loto/front
 COPY package.json .
 RUN npm install
 COPY . .

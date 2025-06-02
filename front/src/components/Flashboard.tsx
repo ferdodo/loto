@@ -1,10 +1,10 @@
 import { DrawNumberUseCase, RequestDrawUseCase } from "core";
 import React, { useMemo } from "react";
-import { useBingo } from "../hooks/useBingo";
-import { bingoRepository } from "../repositories/bingoRepository";
+import { useLoto } from "../hooks/useLoto";
+import { lotoRepository } from "../repositories/lotoRepository";
 
 export function Flashboard() {
-	const bingo = useBingo();
+	const loto = useLoto();
 
 	const groups: number[][] = useMemo(() => {
 		const _groups = [];
@@ -19,18 +19,18 @@ export function Flashboard() {
 	}, []);
 
 	function requestDraw() {
-		new RequestDrawUseCase(bingoRepository).execute();
+		new RequestDrawUseCase(lotoRepository).execute();
 	}
 
 	function drawNumber(num: number) {
-		new DrawNumberUseCase(bingoRepository).execute(num);
+		new DrawNumberUseCase(lotoRepository).execute(num);
 	}
 
-	function bingoHasNumber(num: number): boolean {
-		return bingo?.drawnNumbers.includes(num) || false;
+	function lotoHasNumber(num: number): boolean {
+		return loto?.drawnNumbers.includes(num) || false;
 	}
 
-	if (!bingo) {
+	if (!loto) {
 		return null;
 	}
 
@@ -49,7 +49,7 @@ export function Flashboard() {
 					<div
 						key={num}
 						style={{
-							border: bingoHasNumber(num)
+							border: lotoHasNumber(num)
 								? "1mm solid white"
 								: "1px solid black",
 							gridArea: `${i + 1} / ${j + 1}/ ${i + 2} / ${j + 2}`,
@@ -69,7 +69,7 @@ export function Flashboard() {
 
 			<div
 				style={{
-					border: bingo.isDrawRequested ? "1mm solid white" : "1px solid black",
+					border: loto.isDrawRequested ? "1mm solid white" : "1px solid black",
 					gridArea: "7/6/8/8",
 					display: "grid",
 					placeContent: "center",

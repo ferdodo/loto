@@ -14,7 +14,7 @@ export function Card(playerCard: PlayerCard) {
 		>
 			<img
 				style={{ gridArea: "1 / 1 / 6 / 12", width: "100%" }}
-				alt="Carte de bingo"
+				alt="Carte de loto"
 				src="./carte.jpg"
 			/>
 

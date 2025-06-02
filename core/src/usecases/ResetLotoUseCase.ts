@@ -1,17 +1,14 @@
 import { Loto } from "../entities/Loto";
 import type { LotoRepository } from "../repositories/LotoRepository";
 
-export class RequestDrawUseCase {
+export class ResetLotoUseCase {
 	constructor(private readonly lotoRepository: LotoRepository) {}
 
 	async execute(): Promise<void> {
-		const game = await this.lotoRepository.readLoto();
-
-		const updatedGame = new Loto({
-			...game,
-			isDrawRequested: true,
+		const resetGame = new Loto({
+			drawnNumbers: [],
+			isDrawRequested: false,
 		});
-
-		await this.lotoRepository.setLoto(updatedGame);
+		await this.lotoRepository.setLoto(resetGame);
 	}
 }

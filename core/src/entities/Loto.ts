@@ -1,10 +1,10 @@
-export class Bingo {
+export class Loto {
 	readonly drawnNumbers: number[];
 	readonly isDrawRequested: boolean;
 
 	constructor(data: {
-		drawnNumbers: Bingo["drawnNumbers"];
-		isDrawRequested: Bingo["isDrawRequested"];
+		drawnNumbers: Loto["drawnNumbers"];
+		isDrawRequested: Loto["isDrawRequested"];
 	}) {
 		this.validateData(data);
 		this.validateDrawnNumbers(data.drawnNumbers);
@@ -48,5 +48,17 @@ export class Bingo {
 		if (JSON.stringify(numbers) !== JSON.stringify(sortedNumbers)) {
 			throw new Error("Numbers must be in ascending order");
 		}
+	}
+
+	static numbersLeft(loto: Loto): number[] {
+		const num = [];
+
+		for (let i = 1; i <= 90; i++) {
+			if (!loto.drawnNumbers.includes(i)) {
+				num.push(i);
+			}
+		}
+
+		return num;
 	}
 }

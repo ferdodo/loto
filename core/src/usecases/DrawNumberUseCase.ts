@@ -1,11 +1,11 @@
-import { Bingo } from "../entities/Bingo";
-import type { BingoRepository } from "../repositories/BingoRepository";
+import { Loto } from "../entities/Loto";
+import type { LotoRepository } from "../repositories/LotoRepository";
 
 export class DrawNumberUseCase {
-	constructor(private readonly bingoRepository: BingoRepository) {}
+	constructor(private readonly lotoRepository: LotoRepository) {}
 
 	async execute(number: number): Promise<void> {
-		const game = await this.bingoRepository.readBingo();
+		const game = await this.lotoRepository.readLoto();
 
 		if (!game.isDrawRequested) {
 			throw new Error("No draw requested");
@@ -27,11 +27,11 @@ export class DrawNumberUseCase {
 			throw new Error("Number has already been drawn");
 		}
 
-		const updatedGame = new Bingo({
+		const updatedGame = new Loto({
 			drawnNumbers: [...game.drawnNumbers, number].sort((a, b) => a - b),
 			isDrawRequested: false,
 		});
 
-		await this.bingoRepository.setBingo(updatedGame);
+		await this.lotoRepository.setLoto(updatedGame);
 	}
 }

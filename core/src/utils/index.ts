@@ -1,1 +1,1 @@
-export * from "./createBingoRepository";
+export * from "./createLotoRepository";

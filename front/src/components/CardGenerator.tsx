@@ -32,7 +32,7 @@ export function CardGenerator() {
 
 		const link = document.createElement("a");
 		link.href = image;
-		link.download = `bingo_card_${pseudo}.png`;
+		link.download = `loto_card_${pseudo}.png`;
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);

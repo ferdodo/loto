@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { Bingo } from "./Bingo";
+import { Loto } from "./Loto";
 
-type BingoConstructorParams = {
+type LotoConstructorParams = {
 	drawnNumbers: number[];
 	isDrawRequested: boolean;
 };
 
-describe("Bingo", () => {
-	it("should create a valid bingo game", () => {
-		const game = new Bingo({
+describe("Loto", () => {
+	it("should create a valid loto game", () => {
+		const game = new Loto({
 			drawnNumbers: [1, 2, 3],
 			isDrawRequested: false,
 		});
@@ -19,7 +19,7 @@ describe("Bingo", () => {
 
 	it("should throw when drawnNumbers is not an array", () => {
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: "not an array" as unknown as number[],
 				isDrawRequested: false,
 			});
@@ -28,7 +28,7 @@ describe("Bingo", () => {
 
 	it("should throw when isDrawRequested is not a boolean", () => {
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: [],
 				isDrawRequested: "not a boolean" as unknown as boolean,
 			});
@@ -38,7 +38,7 @@ describe("Bingo", () => {
 	it("should throw when there are more than 90 numbers", () => {
 		const numbers = Array.from({ length: 91 }, (_, i) => i + 1);
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: numbers,
 				isDrawRequested: false,
 			});
@@ -47,7 +47,7 @@ describe("Bingo", () => {
 
 	it("should throw when there are duplicate numbers", () => {
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: [1, 2, 2, 3],
 				isDrawRequested: false,
 			});
@@ -56,14 +56,14 @@ describe("Bingo", () => {
 
 	it("should throw when numbers are not between 1 and 90", () => {
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: [0, 1, 2],
 				isDrawRequested: false,
 			});
 		}).toThrow("Numbers must be between 1 and 90");
 
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: [1, 2, 91],
 				isDrawRequested: false,
 			});
@@ -72,7 +72,7 @@ describe("Bingo", () => {
 
 	it("should throw when numbers are not integers", () => {
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: [1, 2.5, 3],
 				isDrawRequested: false,
 			});
@@ -81,7 +81,7 @@ describe("Bingo", () => {
 
 	it("should throw when numbers are not in ascending order", () => {
 		expect(() => {
-			new Bingo({
+			new Loto({
 				drawnNumbers: [3, 1, 2],
 				isDrawRequested: false,
 			});
