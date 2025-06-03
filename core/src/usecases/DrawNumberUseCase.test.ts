@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { Loto } from "../entities/Loto";
-import { createLotoRepository } from "../utils/createLotoRepository";
+import { createTestLotoRepository } from "../utils";
 import { DrawNumberUseCase } from "./DrawNumberUseCase";
 
 describe("DrawNumberUseCase", () => {
 	it("should draw a new number and update the game", async () => {
-		const repository = createLotoRepository();
+		const repository = createTestLotoRepository();
 		const game = new Loto({
 			drawnNumbers: [1, 2, 3],
 			isDrawRequested: true,
@@ -23,7 +23,7 @@ describe("DrawNumberUseCase", () => {
 	});
 
 	it("should throw when no draw is requested", async () => {
-		const repository = createLotoRepository();
+		const repository = createTestLotoRepository();
 		const game = new Loto({
 			drawnNumbers: [1, 2, 3],
 			isDrawRequested: false,
@@ -36,7 +36,7 @@ describe("DrawNumberUseCase", () => {
 	});
 
 	it("should throw when all numbers have been drawn", async () => {
-		const repository = createLotoRepository();
+		const repository = createTestLotoRepository();
 		const allNumbers = Array.from({ length: 90 }, (_, i) => i + 1);
 		const game = new Loto({
 			drawnNumbers: allNumbers,
@@ -52,7 +52,7 @@ describe("DrawNumberUseCase", () => {
 	});
 
 	it("should throw when number is out of range", async () => {
-		const repository = createLotoRepository();
+		const repository = createTestLotoRepository();
 		const game = new Loto({
 			drawnNumbers: [1, 2, 3],
 			isDrawRequested: true,
@@ -70,7 +70,7 @@ describe("DrawNumberUseCase", () => {
 	});
 
 	it("should throw when number is not an integer", async () => {
-		const repository = createLotoRepository();
+		const repository = createTestLotoRepository();
 		const game = new Loto({
 			drawnNumbers: [1, 2, 3],
 			isDrawRequested: true,
@@ -85,7 +85,7 @@ describe("DrawNumberUseCase", () => {
 	});
 
 	it("should throw when number has already been drawn", async () => {
-		const repository = createLotoRepository();
+		const repository = createTestLotoRepository();
 		const game = new Loto({
 			drawnNumbers: [1, 2, 3],
 			isDrawRequested: true,

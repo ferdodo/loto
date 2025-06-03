@@ -1,1 +1,2 @@
-export * from "./createLotoRepository";
+export * from "./createLotoTestData";
+export * from "./createTestLotoRepository";

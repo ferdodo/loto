@@ -1,11 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { Loto } from "../entities/Loto";
-import { createLotoRepository } from "../utils/createLotoRepository";
+import { createTestLotoRepository } from "../utils/createTestLotoRepository";
 import { ResetLotoUseCase } from "./ResetLotoUseCase";
 
 describe("ResetLotoUseCase", () => {
 	it("should reset the draw", async () => {
-		const repository = createLotoRepository();
+		const repository = createTestLotoRepository();
 		const game = new Loto({
 			drawnNumbers: [1, 2, 3],
 			isDrawRequested: true,

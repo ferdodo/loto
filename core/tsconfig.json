@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"strict": true,
 		"noEmit": true,
-		"lib": ["ESNext"],
+		"lib": ["ESNext", "DOM"],
 		"module": "ESNext",
 		"moduleResolution": "bundler",
 		"target": "ESNext",
