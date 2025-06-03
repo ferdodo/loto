@@ -124,10 +124,11 @@ export function bindEngine(
 		lastTime = event.timestamp;
 		const elapsed = Date.now() - start;
 		const accel = 0.8 + elapsed / 50000;
-		rotateArena(delta * 0.0005);
-		rotateMixer(-delta * 0.0005 * accel);
-		rotateMixer1(-delta * 0.0005 * accel);
-		rotateMixer2(-delta * 0.0005 * accel);
+		const initialSpeed = 0.0005 + (0.0005 * loto.drawnNumbers.length) / 35;
+		rotateArena(delta * initialSpeed);
+		rotateMixer(-delta * initialSpeed * accel);
+		rotateMixer1(-delta * initialSpeed * accel);
+		rotateMixer2(-delta * initialSpeed * accel);
 	});
 
 	Events.on(render, "afterRender", () => {

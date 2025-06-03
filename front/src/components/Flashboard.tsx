@@ -96,6 +96,7 @@ export function Flashboard() {
 					userSelect: "none",
 				}}
 				onClick={undoLastAction}
+				onKeyUp={undoLastAction}
 			>
 				Annuler
 			</div>
