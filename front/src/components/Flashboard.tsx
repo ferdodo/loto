@@ -1,6 +1,7 @@
-import { DrawNumberUseCase, RequestDrawUseCase } from "core";
+import { DrawNumberUseCase, RequestDrawUseCase, UndoLastAction } from "core";
 import React, { useMemo } from "react";
 import { useLoto } from "../hooks/useLoto";
+import { lotoHistoryRepository } from "../repositories/lotoHistoryRepository";
 import { lotoRepository } from "../repositories/lotoRepository";
 
 export function Flashboard() {
@@ -28,6 +29,10 @@ export function Flashboard() {
 
 	function lotoHasNumber(num: number): boolean {
 		return loto?.drawnNumbers.includes(num) || false;
+	}
+
+	async function undoLastAction() {
+		await new UndoLastAction(lotoRepository, lotoHistoryRepository).execute();
 	}
 
 	if (!loto) {
@@ -88,6 +93,7 @@ export function Flashboard() {
 					placeContent: "center",
 					fontSize: "1.5em",
 				}}
+				onDoubleClick={undoLastAction}
 			>
 				Annuler
 			</div>
