@@ -1,23 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { Loto } from "../entities/Loto";
+import { LotoHistoryRepository } from "../repositories/LotoHistoryRepository";
 import { createTestLotoRepository } from "../utils/createTestLotoRepository";
 import { ResetLotoUseCase } from "./ResetLotoUseCase";
 
 describe("ResetLotoUseCase", () => {
-	it("should reset the draw", async () => {
-		const repository = createTestLotoRepository();
-		const game = new Loto({
-			drawnNumbers: [1, 2, 3],
-			isDrawRequested: true,
-		});
-
-		await repository.setLoto(game);
-
-		const useCase = new ResetLotoUseCase(repository);
-		await useCase.execute();
-
-		const updatedGame = await repository.readLoto();
-		expect(updatedGame.drawnNumbers).toEqual([]);
-		expect(updatedGame.isDrawRequested).toBe(false);
+	it("should reset the game and clear history", async () => {
+		const testRepository = createTestLotoRepository();
+		const historyRepository = new LotoHistoryRepository(testRepository);
+		const resetLoto = new ResetLotoUseCase(testRepository, historyRepository);
+		await resetLoto.execute();
+		const game = await testRepository.readLoto();
+		expect(game.drawnNumbers).toEqual([]);
+		expect(game.isDrawRequested).toBe(false);
+		expect(historyRepository.getHistory()).toEqual([]);
 	});
 });

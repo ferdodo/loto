@@ -39,4 +39,8 @@ export class LotoHistoryRepository {
 			this.history.pop();
 		}
 	}
+
+	public clearHistory(): void {
+		this.history = [];
+	}
 }
