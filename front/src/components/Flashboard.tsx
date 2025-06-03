@@ -64,7 +64,7 @@ export function Flashboard() {
 							fontSize: "1.75em",
 							userSelect: "none",
 						}}
-						onDoubleClick={() => drawNumber(num)}
+						onClick={() => drawNumber(num)}
 						onKeyUp={() => drawNumber(num)}
 					>
 						{num}
@@ -95,7 +95,7 @@ export function Flashboard() {
 					fontSize: "1.5em",
 					userSelect: "none",
 				}}
-				onDoubleClick={undoLastAction}
+				onClick={undoLastAction}
 			>
 				Annuler
 			</div>
