@@ -20,5 +20,6 @@ export class UndoLastAction {
 		}
 
 		await this.lotoRepository.setLoto(previousState);
+		this.historyRepository.removeLastState();
 	}
 }

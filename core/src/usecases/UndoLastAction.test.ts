@@ -36,4 +36,24 @@ describe("UndoLastAction", () => {
 		const finalState = await testRepository.readLoto();
 		expect(finalState).toEqual(testData.withTwoNumbers());
 	});
+
+	it("should be able to undo multiple actions", async () => {
+		const testData = createLotoTestData();
+		const testRepository = createTestLotoRepository();
+		const historyRepository = new LotoHistoryRepository(testRepository);
+		const undoLastAction = new UndoLastAction(
+			testRepository,
+			historyRepository,
+		);
+
+		await testRepository.setLoto(testData.empty());
+		await testRepository.setLoto(testData.withTwoNumbers());
+		await testRepository.setLoto(testData.withThreeNumbers());
+
+		await undoLastAction.execute();
+		await undoLastAction.execute();
+
+		const finalState = await testRepository.readLoto();
+		expect(finalState).toEqual(testData.empty());
+	});
 });

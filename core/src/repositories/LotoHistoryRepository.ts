@@ -12,7 +12,14 @@ export class LotoHistoryRepository {
 
 	private subscribeToLotoRepository() {
 		this.lotoRepository.subscribe((loto) => {
-			this.history.push(loto);
+			const lastState = this.history[this.history.length - 1];
+
+			if (
+				!lastState ||
+				loto.drawnNumbers.length >= lastState.drawnNumbers.length
+			) {
+				this.history.push(loto);
+			}
 		});
 	}
 
@@ -26,5 +33,11 @@ export class LotoHistoryRepository {
 		}
 
 		return this.history[this.history.length - 2];
+	}
+
+	public removeLastState(): void {
+		if (this.history.length > 0) {
+			this.history.pop();
+		}
 	}
 }
