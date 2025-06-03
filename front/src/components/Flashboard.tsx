@@ -79,6 +79,7 @@ export function Flashboard() {
 					display: "grid",
 					placeContent: "center",
 					fontSize: "1.5em",
+					userSelect: "none",
 				}}
 				onClick={requestDraw}
 				onKeyUp={requestDraw}
@@ -92,6 +93,7 @@ export function Flashboard() {
 					display: "grid",
 					placeContent: "center",
 					fontSize: "1.5em",
+					userSelect: "none",
 				}}
 				onDoubleClick={undoLastAction}
 			>
