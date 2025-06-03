@@ -53,7 +53,7 @@ export function bindEngine(
 	const balls: Body[] = [];
 
 	for (const _num of Loto.numbersLeft(loto)) {
-		balls.push(Bodies.circle(400 + Math.random(), 200 + Math.random(), 17));
+		balls.push(Bodies.circle(510 + Math.random(), 200 + Math.random(), 17));
 	}
 
 	const [arena, rotateArena] = createHollowCircle(500, 200, 225, 205, 40, 100);
