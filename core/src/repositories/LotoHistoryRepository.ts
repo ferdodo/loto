@@ -13,10 +13,9 @@ export class LotoHistoryRepository {
 	private subscribeToLotoRepository() {
 		this.lotoRepository.subscribe((loto) => {
 			const lastState = this.history[this.history.length - 1];
-
 			if (
 				!lastState ||
-				loto.drawnNumbers.length >= lastState.drawnNumbers.length
+				loto.drawnNumbers.length > lastState.drawnNumbers.length
 			) {
 				this.history.push(loto);
 			}
