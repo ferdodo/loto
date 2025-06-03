@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { LotoHistoryRepository } from "../repositories/LotoHistoryRepository";
+import { createLotoHistoryRepository } from "../repositories/createLotoHistoryRepository";
 import { createLotoTestData } from "../utils/createLotoTestData";
 import { createTestLotoRepository } from "../utils/createTestLotoRepository";
 import { DrawNumberUseCase } from "./DrawNumberUseCase";
@@ -9,7 +9,7 @@ import { UndoLastAction } from "./UndoLastAction";
 describe("UndoLastAction", () => {
 	it("should throw an error when there is no previous state", async () => {
 		const testRepository = createTestLotoRepository();
-		const historyRepository = new LotoHistoryRepository(testRepository);
+		const historyRepository = createLotoHistoryRepository(testRepository);
 		const undoLastAction = new UndoLastAction(
 			testRepository,
 			historyRepository,
@@ -23,7 +23,7 @@ describe("UndoLastAction", () => {
 	it("should restore the previous state when available", async () => {
 		const testData = createLotoTestData();
 		const testRepository = createTestLotoRepository();
-		const historyRepository = new LotoHistoryRepository(testRepository);
+		const historyRepository = createLotoHistoryRepository(testRepository);
 		const undoLastAction = new UndoLastAction(
 			testRepository,
 			historyRepository,
@@ -42,7 +42,7 @@ describe("UndoLastAction", () => {
 	it("should be able to undo multiple actions", async () => {
 		const testData = createLotoTestData();
 		const testRepository = createTestLotoRepository();
-		const historyRepository = new LotoHistoryRepository(testRepository);
+		const historyRepository = createLotoHistoryRepository(testRepository);
 		const undoLastAction = new UndoLastAction(
 			testRepository,
 			historyRepository,
@@ -61,7 +61,7 @@ describe("UndoLastAction", () => {
 
 	it("should be able to undo real game actions", async () => {
 		const testRepository = createTestLotoRepository();
-		const historyRepository = new LotoHistoryRepository(testRepository);
+		const historyRepository = createLotoHistoryRepository(testRepository);
 		const undoLastAction = new UndoLastAction(
 			testRepository,
 			historyRepository,

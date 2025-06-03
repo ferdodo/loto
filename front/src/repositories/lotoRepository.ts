@@ -3,8 +3,10 @@ import { Loto } from "core";
 
 type LotoObserver = (game: Loto) => void;
 
+const LOTO_KEY = "loto:v2";
+
 async function readLoto() {
-	const serializedLoto = localStorage.getItem("loto");
+	const serializedLoto = localStorage.getItem(LOTO_KEY);
 
 	const rawData: unknown = serializedLoto
 		? JSON.parse(serializedLoto)
@@ -20,7 +22,7 @@ function createLotoRepository() {
 		readLoto,
 		async setLoto(loto: Loto) {
 			localStorage.setItem(
-				"loto",
+				LOTO_KEY,
 				JSON.stringify({
 					drawnNumbers: loto.drawnNumbers,
 					isDrawRequested: loto.isDrawRequested,
